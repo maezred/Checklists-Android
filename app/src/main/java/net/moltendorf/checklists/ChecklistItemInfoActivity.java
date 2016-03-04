@@ -53,7 +53,6 @@ public class ChecklistItemInfoActivity extends AppCompatActivity {
 		super.onPause();
 
 		mInfoEditText.onPauseListener();
-		;
 	}
 
 	private void prepareEventHandlers() {
