@@ -3,6 +3,7 @@ package net.moltendorf.checklists;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -26,6 +27,7 @@ public class ChecklistItemView extends LinearLayout {
 	private CustomEditText mItemEditText;
 	private ImageView      mItemCheckButton;
 	private ImageView      mItemDeleteButton;
+	private ImageView      mItemInfoButton;
 
 	public ChecklistItemView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -37,6 +39,7 @@ public class ChecklistItemView extends LinearLayout {
 		mItemEditText = (CustomEditText) findViewById(R.id.item_checklist_default_item);
 		mItemCheckButton = (ImageView) findViewById(R.id.item_checklist_check_button);
 		mItemDeleteButton = (ImageView) findViewById(R.id.item_checklist_delete_button);
+		mItemInfoButton = (ImageView) findViewById(R.id.item_checklist_info_button);
 
 		final Runnable finishEditItem = new Runnable() {
 			@Override
@@ -149,6 +152,21 @@ public class ChecklistItemView extends LinearLayout {
 				}
 
 				showDeleteDialog();
+			}
+		});
+
+		mItemInfoButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ChecklistActivity activity = mActivity.get();
+
+				if (activity != null) {
+					Intent intent = new Intent(activity, ChecklistItemInfoActivity.class);
+					intent.putExtra("checklistId", mItem.getChecklist().getId());
+					intent.putExtra("itemPosition", mPosition);
+
+					activity.startActivity(intent);
+				}
 			}
 		});
 	}

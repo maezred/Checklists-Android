@@ -255,6 +255,7 @@ public class DataModel implements Iterable {
 			private boolean mAutoFocus;
 
 			private String  mText;
+			private String  mInfo;
 			private boolean mChecked;
 
 			private Item(Checklist checklist) {
@@ -263,6 +264,7 @@ public class DataModel implements Iterable {
 				mAutoFocus = true;
 
 				mText = "";
+				mInfo = "";
 				mChecked = false;
 			}
 
@@ -272,6 +274,7 @@ public class DataModel implements Iterable {
 				mAutoFocus = false;
 
 				mText = jsonObject.optString("text");
+				mInfo = jsonObject.optString("info");
 				mChecked = jsonObject.optBoolean("checked");
 			}
 
@@ -281,6 +284,16 @@ public class DataModel implements Iterable {
 
 			public void setText(String text) {
 				mText = text;
+
+				getInstance().save();
+			}
+
+			public String getInfo() {
+				return mInfo;
+			}
+
+			public void setInfo(String info) {
+				mInfo = info;
 
 				getInstance().save();
 			}
@@ -310,6 +323,7 @@ public class DataModel implements Iterable {
 			private JSONObject toJSON() throws JSONException {
 				JSONObject itemObject = new JSONObject();
 				itemObject.put("text", mText);
+				itemObject.put("info", mInfo);
 				itemObject.put("checked", mChecked);
 
 				return itemObject;

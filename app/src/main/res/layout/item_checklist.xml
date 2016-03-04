@@ -10,10 +10,10 @@
         android:id="@+id/item_checklist_check_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="12dp"
         android:paddingLeft="12dp"
         android:paddingRight="8dp"
         android:paddingTop="14dp"
-        android:paddingBottom="12dp"
         android:src="@android:drawable/checkbox_off_background"/>
 
     <net.moltendorf.checklists.CustomEditText
@@ -27,13 +27,23 @@
         android:textSize="20sp"/>
 
     <ImageView
-        android:id="@+id/item_checklist_delete_button"
+        android:id="@+id/item_checklist_info_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="6dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:paddingTop="6dp"
+        android:src="@android:drawable/ic_menu_info_details"/>
+
+    <ImageView
+        android:id="@+id/item_checklist_delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingBottom="6dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="6dp"
         android:src="@android:drawable/ic_menu_delete"/>
 
 </net.moltendorf.checklists.ChecklistItemView>

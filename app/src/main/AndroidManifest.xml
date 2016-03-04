@@ -29,6 +29,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.moltendorf.checklists.MainActivity"/>
         </activity>
+        <activity android:name=".ChecklistItemInfoActivity">
+        </activity>
     </application>
 
 </manifest>
