@@ -103,4 +103,12 @@ public class ChecklistItemInfoActivity extends AppCompatActivity {
 
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+
+		setResult(RESULT_OK);
+		finish();
+	}
 }

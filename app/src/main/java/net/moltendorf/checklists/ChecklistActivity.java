@@ -213,10 +213,10 @@ public class ChecklistActivity extends AppCompatActivity {
 			case android.R.id.home:
 				if (mKeyboardFocus != null) {
 					mKeyboardFocus.onBackListener();
-
-					setResult(RESULT_OK);
-					finish();
 				}
+
+				setResult(RESULT_OK);
+				finish();
 
 				break;
 
