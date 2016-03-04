@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Checklists</string>
     <string name="action_delete">Delete</string>
-    <string name="action_delete_confirm">Are you sure you wish to delete this checklist?</string>
+    <string name="action_delete_checklist_confirm">Are you sure you wish to delete this checklist?</string>
+    <string name="action_delete_item_confirm">Are you sure you wish to delete this?\n%1$s</string>
     <string name="action_delete_confirm_positive">Delete</string>
     <string name="action_delete_confirm_negative">Keep</string>
     <string name="action_rename">Rename</string>

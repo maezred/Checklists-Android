@@ -235,7 +235,7 @@ public class ChecklistActivity extends AppCompatActivity {
 	private void showDeleteDialog() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-		alert.setMessage(R.string.action_delete_confirm);
+		alert.setMessage(R.string.action_delete_checklist_confirm);
 
 		alert.setPositiveButton(R.string.action_delete_confirm_positive, new DialogInterface.OnClickListener() {
 			@Override

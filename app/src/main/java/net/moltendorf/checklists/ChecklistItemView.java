@@ -1,6 +1,8 @@
 package net.moltendorf.checklists;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -131,16 +133,58 @@ public class ChecklistItemView extends LinearLayout {
 		mItemDeleteButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mItem.getChecklist().deleteItem(mPosition);
+				String newItem = mItemEditText.getText().toString().trim().replaceAll("\\n", "").replaceAll("\\s{2,}", " ");
+
+				if (!newItem.isEmpty()) {
+					mItem.setText(newItem);
+				}
+
+				mItemEditText.clearFocus();
 
 				ChecklistActivity activity = mActivity.get();
 
 				if (activity != null) {
 					activity.hideKeyboard();
-					activity.refreshList();
+					activity.mKeyboardFocus = null;
 				}
+
+				showDeleteDialog();
 			}
 		});
+	}
+
+	private void showDeleteDialog() {
+		ChecklistActivity activity = mActivity.get();
+
+		if (activity != null) {
+			AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+
+			alert.setMessage(String.format(getResources().getString(R.string.action_delete_item_confirm), mItem.getText()));
+
+			alert.setPositiveButton(R.string.action_delete_confirm_positive, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+
+					mItem.getChecklist().deleteItem(mPosition);
+
+					ChecklistActivity activity = mActivity.get();
+
+					if (activity != null) {
+						activity.refreshList();
+					}
+				}
+			});
+
+			alert.setNegativeButton(R.string.action_delete_confirm_negative, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+
+			alert.show();
+		}
 	}
 
 	public void bindTo(WeakReference<ChecklistActivity> activityReference, DataModel.Checklist.Item item, int position) {
