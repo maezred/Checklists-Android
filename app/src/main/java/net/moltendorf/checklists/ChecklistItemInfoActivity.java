@@ -68,6 +68,9 @@ public class ChecklistItemInfoActivity extends AppCompatActivity {
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
 					saveInfo.run();
+
+					mInfoEditText.clearFocus();
+					mInfoEditText.setText(mItem.getInfo());
 				}
 			}
 		});
@@ -75,10 +78,13 @@ public class ChecklistItemInfoActivity extends AppCompatActivity {
 		mInfoEditText.setOnBackListener(new Runnable() {
 			@Override
 			public void run() {
-				mInfoEditText.clearFocus();
 				saveInfo.run();
+
+				mInfoEditText.clearFocus();
+				mInfoEditText.setText(mItem.getInfo());
 			}
 		});
+
 		mInfoEditText.setOnPauseListener(saveInfo);
 	}
 

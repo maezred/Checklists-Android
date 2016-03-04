@@ -49,8 +49,6 @@ public class ChecklistItemView extends LinearLayout {
 				if (!newItem.isEmpty()) {
 					mItem.setText(newItem);
 				}
-
-				mItemEditText.clearFocus();
 			}
 		};
 
@@ -59,6 +57,9 @@ public class ChecklistItemView extends LinearLayout {
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
 					finishEditItem.run();
+
+					mItemEditText.setText(mItem.getText());
+					mItemEditText.clearFocus();
 				} else {
 					ChecklistActivity activity = mActivity.get();
 
@@ -74,7 +75,9 @@ public class ChecklistItemView extends LinearLayout {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					finishEditItem.run();
+
 					mItemEditText.setText(mItem.getText());
+					mItemEditText.clearFocus();
 
 					ChecklistActivity activity = mActivity.get();
 
@@ -94,6 +97,9 @@ public class ChecklistItemView extends LinearLayout {
 			public void run() {
 				finishEditItem.run();
 
+				mItemEditText.setText(mItem.getText());
+				mItemEditText.clearFocus();
+
 				ChecklistActivity activity = mActivity.get();
 
 				if (activity != null) {
@@ -102,25 +108,12 @@ public class ChecklistItemView extends LinearLayout {
 			}
 		});
 
-		mItemEditText.setOnPauseListener(new Runnable() {
-			@Override
-			public void run() {
-				String newItem = mItemEditText.getText().toString().trim().replaceAll("\\n", "").replaceAll("\\s{2,}", " ");
-
-				if (!newItem.isEmpty()) {
-					mItem.setText(newItem);
-				}
-			}
-		});
+		mItemEditText.setOnPauseListener(finishEditItem);
 
 		mItemCheckButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String newItem = mItemEditText.getText().toString().trim().replaceAll("\\n", "").replaceAll("\\s{2,}", " ");
-
-				if (!newItem.isEmpty()) {
-					mItem.setText(newItem);
-				}
+				finishEditItem.run();
 
 				mItem.setChecked(!mItem.getChecked());
 
