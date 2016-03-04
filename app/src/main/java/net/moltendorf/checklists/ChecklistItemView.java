@@ -111,6 +111,12 @@ public class ChecklistItemView extends LinearLayout {
 		mItemCheckButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				String newItem = mItemEditText.getText().toString().trim().replaceAll("\\n", "").replaceAll("\\s{2,}", " ");
+
+				if (!newItem.isEmpty()) {
+					mItem.setText(newItem);
+				}
+
 				mItem.setChecked(!mItem.getChecked());
 
 				ChecklistActivity activity = mActivity.get();
