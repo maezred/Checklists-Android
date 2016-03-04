@@ -60,7 +60,7 @@ public class ChecklistItemInfoActivity extends AppCompatActivity {
 		final Runnable saveInfo = new Runnable() {
 			@Override
 			public void run() {
-				mItem.setInfo(mInfoEditText.getText().toString().trim().replaceAll("\\n", "").replaceAll("\\s{2,}", " "));
+				mItem.setInfo(mInfoEditText.getText().toString().trim().replaceAll("(^\\n+|\\n+$)", "").replaceAll("( |\\t){2,}", " "));
 			}
 		};
 
