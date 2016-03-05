@@ -247,7 +247,7 @@ public class ChecklistItemView extends LinearLayout {
 			mItemEditText.setPaintFlags(mItemEditText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 		} else {
 			mItemCheckButton.setImageDrawable(getResources().getDrawable(android.R.drawable.checkbox_off_background));
-			mItemEditText.setPaintFlags(mItemEditText.getPaintFlags() & (Integer.MAX_VALUE ^ Paint.STRIKE_THRU_TEXT_FLAG));
+			mItemEditText.setPaintFlags(mItemEditText.getPaintFlags() & (Integer.MIN_VALUE ^ Paint.STRIKE_THRU_TEXT_FLAG));
 		}
 	}
 }
