@@ -8,8 +8,10 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
@@ -74,6 +76,28 @@ public class ChecklistItemView extends LinearLayout {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+					finishEditItem.run();
+
+					mItemEditText.setText(mItem.getText());
+					mItemEditText.clearFocus();
+
+					ChecklistActivity activity = mActivity.get();
+
+					if (activity != null) {
+						activity.hideKeyboard();
+					}
+
+					return true;
+				}
+
+				return false;
+			}
+		});
+
+		mItemEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_NULL) {
 					finishEditItem.run();
 
 					mItemEditText.setText(mItem.getText());

@@ -13,7 +13,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -120,6 +122,21 @@ public class ChecklistActivity extends AppCompatActivity {
 					finishEditTitle.run();
 
 					hideKeyboard();
+				}
+
+				return false;
+			}
+		});
+
+		mTitleEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_NULL) {
+					finishEditTitle.run();
+
+					hideKeyboard();
+
+					return true;
 				}
 
 				return false;
