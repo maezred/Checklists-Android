@@ -97,7 +97,7 @@ public class ChecklistItemView extends LinearLayout {
 		mItemEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (actionId == EditorInfo.IME_NULL) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					finishEditItem.run();
 
 					mItemEditText.setText(mItem.getText());

@@ -131,7 +131,7 @@ public class ChecklistActivity extends AppCompatActivity {
 		mTitleEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (actionId == EditorInfo.IME_NULL) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					finishEditTitle.run();
 
 					hideKeyboard();
