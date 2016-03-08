@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,7 +29,7 @@ public class ChecklistItemView extends LinearLayout {
 	int mPosition = -1;
 
 	private CustomEditText mItemEditText;
-	private ImageView      mItemCheckButton;
+	private CheckBox       mItemCheckButton;
 	private ImageView      mItemDeleteButton;
 	private ImageView      mItemInfoButton;
 
@@ -39,7 +41,7 @@ public class ChecklistItemView extends LinearLayout {
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		mItemEditText = (CustomEditText) findViewById(R.id.item_checklist_default_item);
-		mItemCheckButton = (ImageView) findViewById(R.id.item_checklist_check_button);
+		mItemCheckButton = (CheckBox) findViewById(R.id.item_checklist_check_button);
 		mItemDeleteButton = (ImageView) findViewById(R.id.item_checklist_delete_button);
 		mItemInfoButton = (ImageView) findViewById(R.id.item_checklist_info_button);
 
@@ -134,18 +136,25 @@ public class ChecklistItemView extends LinearLayout {
 
 		mItemEditText.setOnPauseListener(finishEditItem);
 
-		mItemCheckButton.setOnClickListener(new OnClickListener() {
+		mItemCheckButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
-			public void onClick(View v) {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				finishEditItem.run();
 
-				mItem.setChecked(!mItem.getChecked());
+				if (mItem.getChecked() != isChecked) {
+					mItem.setChecked(isChecked);
 
-				ChecklistActivity activity = mActivity.get();
+					ChecklistActivity activity = mActivity.get();
 
-				if (activity != null) {
-					activity.hideKeyboard();
-					activity.refreshList();
+					if (activity != null) {
+						activity.hideKeyboard();
+					}
+				}
+
+				if (isChecked) {
+					mItemEditText.setPaintFlags(mItemEditText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+				} else {
+					mItemEditText.setPaintFlags(mItemEditText.getPaintFlags() & (Integer.MAX_VALUE ^ Paint.STRIKE_THRU_TEXT_FLAG));
 				}
 			}
 		});
@@ -227,6 +236,7 @@ public class ChecklistItemView extends LinearLayout {
 		mItem = item;
 		mPosition = position;
 
+		mItemCheckButton.setChecked(mItem.getChecked());
 		mItemEditText.setText(mItem.getText());
 
 		ChecklistActivity activity = mActivity.get();
@@ -240,14 +250,6 @@ public class ChecklistItemView extends LinearLayout {
 			if (activity != null) {
 				activity.showKeyboard(mItemEditText);
 			}
-		}
-
-		if (mItem.getChecked()) {
-			mItemCheckButton.setImageDrawable(getResources().getDrawable(android.R.drawable.checkbox_on_background));
-			mItemEditText.setPaintFlags(mItemEditText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-		} else {
-			mItemCheckButton.setImageDrawable(getResources().getDrawable(android.R.drawable.checkbox_off_background));
-			mItemEditText.setPaintFlags(mItemEditText.getPaintFlags() & (Integer.MIN_VALUE ^ Paint.STRIKE_THRU_TEXT_FLAG));
 		}
 	}
 }
